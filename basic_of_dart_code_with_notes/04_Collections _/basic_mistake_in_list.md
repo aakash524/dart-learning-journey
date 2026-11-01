@@ -331,3 +331,88 @@ void main() {
 - `last` → Last element.
 - `single` → Exactly one element.
 - `firstOrNull` → First element, ya empty hone par `null`.
+
+
+
+# ------------- Dart List: `forEach()` vs `for` Loop  --------------
+
+## 1. Common Mistake — `return` in `forEach()`
+
+**English:** `return` inside a `forEach()` callback exits only the current callback. It does not stop the entire iteration.
+
+**Hindi:** `forEach()` ke andar `return` likhne se sirf current callback end hota hai. Baaki elements par iteration continue hoti hai.
+
+```dart
+var list = [1, 2, 3, 4];
+
+list.forEach((e) {
+  if (e == 2) return;
+  print(e);
+});
+
+// Output:
+// 1
+// 3
+// 4
+```
+
+## 2. Correct Way — Use `break`
+
+**English:** Use a regular `for` or `for-in` loop when you need to stop iteration with `break`.
+
+**Hindi:** Agar kisi condition par poora loop rokna hai, toh normal `for` ya `for-in` loop use karo.
+
+```dart
+var list = [1, 2, 3, 4];
+
+for (var e in list) {
+  if (e == 2) break;
+  print(e);
+}
+
+// Output:
+// 1
+```
+
+## Memory Trick
+
+- `forEach()` + `return` → Current callback ends.
+- `for` + `break` → Entire loop stops.
+
+**Interview Point:** `forEach()` mein `break` use nahi kar sakte. Loop ko condition par stop karna ho toh `for` loop use karo.
+
+
+# ------------   12. == se List compare karna  mistake  ---------------
+
+# 1. == se List compare karna (Comparing Lists)
+English Definition: In Dart, the == operator checks whether two Lists refer to the same object. It does not compare their elements by default.
+
+Hindi Explanation: Dart mein == operator ye check karta hai ki dono variables same List object ko refer kar rahe hain ya nahi. Ye List ke elements ko compare nahi karta.
+
+void main() {
+  print([1, 2] == [1, 2]); // false
+}
+
+# 2. listEquals() – Flutter
+
+English: Compares List elements and their order.
+
+Hindi: List ke elements aur unka order compare karta hai.
+
+import 'package:flutter/foundation.dart';
+
+print(listEquals([1, 2], [1, 2])); // true
+
+# ListEquality() – Collection Package
+ import 'package:collection/collection.dart';
+
+print(const ListEquality().equals([1, 2], [1, 2])); // true
+
+# Memory Trick:
+- == → Reference check.
+- listEquals() → Content check (Flutter).
+- ListEquality() → Content check (Dart package).
+
+
+# ------- 13. sort() ka Return Value  ---------
+
